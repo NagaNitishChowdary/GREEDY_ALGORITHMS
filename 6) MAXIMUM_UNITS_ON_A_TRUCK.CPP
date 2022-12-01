@@ -5,25 +5,24 @@
 using namespace std;
 
 bool comp(vector<int>a,vector<int>b){
-        return a[1] > b[1] ;
-    }
+    return a[1] > b[1] ;
+}
 
 int maximumUnits(vector<vector<int>>& boxTypes, int truckSize) {
-    sort(boxTypes.begin(),boxTypes.end(),comp) ;
-    int ans = 0;
-    int i=0;
-    while(1){
-        if(truckSize - boxTypes[i][0] > 0){
+    sort(boxTypes.begin(),boxTypes.end(),[](vector<int> &x,vector<int> &y){
+        return x[1]>y[1];
+    });
+    int ans = 0; int i= 0;
+    for(i=0; i<boxTypes.size() && truckSize ; i++){
+        if(truckSize - boxTypes[i][0] > 0 ){
             truckSize -= boxTypes[i][0] ;
             ans += boxTypes[i][0] * boxTypes[i][1] ;
-            i++ ;
         }
         else break ;
     }
-    ans += (truckSize*boxTypes[i][1]) ;
+    if(i<boxTypes.size()) ans += (truckSize*boxTypes[i][1]) ;
     return ans ;
 }
-
 int main(){
     int testCases; cin >> testCases ;
     while(testCases--){
